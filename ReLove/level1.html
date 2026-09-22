@@ -70,7 +70,6 @@
             text-transform: uppercase;
         }
 
-        /* Heart Animation */
         .heart-container {
             width: 60px;
             height: 60px;
@@ -137,7 +136,6 @@
             line-height: 1.4;
         }
 
-        /* Card Content */
         .content-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
@@ -163,7 +161,6 @@
             font-weight: 500;
         }
 
-        /* Task Section */
         .task-box {
             background: rgba(232, 121, 249, 0.03);
             border: 1px dashed var(--border-hover);
@@ -187,7 +184,6 @@
             line-height: 1.5;
         }
 
-        /* Input Area */
         .input-group {
             margin-bottom: 24px;
         }
@@ -217,7 +213,6 @@
             color: #475569;
         }
 
-        /* Button */
         .btn {
             width: 100%;
             padding: 14px;
@@ -234,11 +229,15 @@
             box-shadow: 0 4px 20px rgba(244, 63, 94, 0.3);
         }
 
-        .btn:active {
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn:active:not(:disabled) {
             transform: scale(0.98);
         }
 
-        /* Lock Screen Overlay (For Level Completed) */
         .next-level-lock {
             display: none;
             text-align: center;
@@ -289,26 +288,24 @@
             <h1 class="title">«Ես հասկանում եմ, որ ցավեցրել եմ քեզ»</h1>
         </div>
 
-        <!-- Dynamic Area: Form or Completion Screen -->
         <div id="interactive-area">
             <div class="content-card">
-                <p>Այս առաջին քայլը սովորական «կներես» ասելու մասին չէ։ Սա այն պահն է, երբ ես ուզում եմ, որ դու իմանաս՝ <span class="highlight">ես իսկապես գիտակցում եմ իմ սխալը</span>։</p>
-                <p>Ես չեմ փնտրում արդարացումներ։ Ես ուղղակի ուզում եմ, որ դու տեսնես իմ անկեղծությունը և իմանաս, որ քո զգացմունքներն ինձ համար ամենակարևորն են։</p>
+                <p>Ոզում եմ, որ դու իմանաս՝ <span class="highlight">ես իսկապես գիտակցում եմ իմ սխալը</span>։</p>
+                <p>Ես չեմ փնտրում արդարացումներ։ Ես ուղղակի ուզում եմ, որ դու տեսնես իմ անկեղծությունը և իմանաս, որ քո զգացմունքները, մեր ընտանիքը ու մեր ապագան իմ համար ամենակարևորն են։</p>
             </div>
 
             <div class="task-box">
                 <div class="task-title">✨ Առաջադրանք քեզ համար</div>
-                <div class="task-desc">Եթե պատրաստ ես, գրիր ինձ՝ ինչն է քեզ ամենաշատը ցավեցրել, կամ պարզապես թող մի փոքր նշում։ Եթե դեռ պատրաստ չես խոսել, ուղղակի սեղմիր կոճակը։</div>
+                <div class="task-desc">Եթե ցանկանում ես գրիր ինձ ինչ որ բան։ Եթե դեռ պատրաստ չես խոսել, ուղղակի սեղմիր կոճակը։</div>
             </div>
 
             <div class="input-group">
                 <textarea id="user-response" placeholder="Քո պատասխանը կամ մտքերը (կամայական)..."></textarea>
             </div>
 
-            <button class="btn" onclick="completeLevel()">Ավարտել Level 01-ը</button>
+            <button id="submit-btn" class="btn" onclick="completeLevel()">Ավարտել Level 01-ը</button>
         </div>
 
-        <!-- Lock Screen (Appears after completing Level 01) -->
         <div id="completed-area" class="next-level-lock">
             <div class="lock-icon">🔒</div>
             <div class="lock-title">Level 01-ն անցնված է</div>
@@ -322,23 +319,40 @@
     </div>
 
     <script>
-        // Simple client-side persistence so if the user refreshes, they see state
+        const FORMSPREE_ID = "xyezwavd";
+
         document.addEventListener("DOMContentLoaded", function() {
             if (localStorage.getItem("relove_level1_completed") === "true") {
                 showCompletedScreen();
             }
         });
 
-        function completeLevel() {
+        async function completeLevel() {
             const responseText = document.getElementById("user-response").value;
-            
-            // Save locally
-            localStorage.setItem("relove_level1_completed", "true");
-            if (responseText.trim() !== "") {
-                localStorage.setItem("relove_level1_response", responseText);
+            const submitBtn = document.getElementById("submit-btn");
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Ուղարկվում է...";
+
+            if (FORMSPREE_ID) {
+                try {
+                    await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            level: "Level 01",
+                            response: responseText || "[Օգտատերը տեքստ չի գրել, ուղղակի սեղմել է կոճակը]"
+                        })
+                    });
+                } catch (error) {
+                    console.error("Error sending response:", error);
+                }
             }
 
-            // Visual transition
+            localStorage.setItem("relove_level1_completed", "true");
             showCompletedScreen();
         }
 
