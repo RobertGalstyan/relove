@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RE:LOVE · Level 01</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: #161820;
+            --accent-pink: #e879f9;
+            --accent-rose: #f43f5e;
+            --accent-glow: rgba(232, 121, 249, 0.15);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(232, 121, 249, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(244, 63, 94, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(232, 121, 249, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--accent-pink);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        /* Heart Animation */
+        .heart-container {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart {
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent-rose);
+            transform: rotate(-45deg);
+            position: relative;
+            animation: pulse 2s infinite ease-in-out;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.5);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent-rose);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 15px;
+            top: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(0.95); opacity: 0.8; }
+            50% { transform: rotate(-45deg) scale(1.1); opacity: 1; box-shadow: 0 0 25px rgba(244, 63, 94, 0.8); }
+            100% { transform: rotate(-45deg) scale(0.95); opacity: 0.8; }
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        /* Card Content */
+        .content-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            line-height: 1.7;
+            font-size: 14px;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        .content-card p {
+            margin-bottom: 12px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            color: var(--accent-pink);
+            font-weight: 500;
+        }
+
+        /* Task Section */
+        .task-box {
+            background: rgba(232, 121, 249, 0.03);
+            border: 1px dashed var(--border-hover);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 24px;
+        }
+
+        .task-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-pink);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .task-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Input Area */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 110px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+            transition: all 0.3s ease;
+            user-select: text;
+        }
+
+        textarea:focus {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 12px rgba(232, 121, 249, 0.2);
+        }
+
+        textarea::placeholder {
+            color: #475569;
+        }
+
+        /* Button */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #e879f9 0%, #f43f5e 100%);
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 20px rgba(244, 63, 94, 0.3);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Lock Screen Overlay (For Level Completed) */
+        .next-level-lock {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .lock-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            color: var(--accent-pink);
+        }
+
+        .lock-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .lock-timer {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 11px;
+            color: #475569;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">RE : LOVE</div>
+            <div class="heart-container">
+                <div class="heart"></div>
+            </div>
+            <div class="level-badge">Level 01 · Օր 1</div>
+            <h1 class="title">«Ես հասկանում եմ, որ ցավեցրել եմ քեզ»</h1>
+        </div>
+
+        <!-- Dynamic Area: Form or Completion Screen -->
+        <div id="interactive-area">
+            <div class="content-card">
+                <p>Այս առաջին քայլը սովորական «կներես» ասելու մասին չէ։ Սա այն պահն է, երբ ես ուզում եմ, որ դու իմանաս՝ <span class="highlight">ես իսկապես գիտակցում եմ իմ սխալը</span>։</p>
+                <p>Ես չեմ փնտրում արդարացումներ։ Ես ուղղակի ուզում եմ, որ դու տեսնես իմ անկեղծությունը և իմանաս, որ քո զգացմունքներն ինձ համար ամենակարևորն են։</p>
+            </div>
+
+            <div class="task-box">
+                <div class="task-title">✨ Առաջադրանք քեզ համար</div>
+                <div class="task-desc">Եթե պատրաստ ես, գրիր ինձ՝ ինչն է քեզ ամենաշատը ցավեցրել, կամ պարզապես թող մի փոքր նշում։ Եթե դեռ պատրաստ չես խոսել, ուղղակի սեղմիր կոճակը։</div>
+            </div>
+
+            <div class="input-group">
+                <textarea id="user-response" placeholder="Քո պատասխանը կամ մտքերը (կամայական)..."></textarea>
+            </div>
+
+            <button class="btn" onclick="completeLevel()">Ավարտել Level 01-ը</button>
+        </div>
+
+        <!-- Lock Screen (Appears after completing Level 01) -->
+        <div id="completed-area" class="next-level-lock">
+            <div class="lock-icon">🔒</div>
+            <div class="lock-title">Level 01-ն անցնված է</div>
+            <p class="lock-timer" style="margin-bottom: 12px; color: #cbd5e1;">Շնորհակալություն անկեղծության համար։ Քո պատասխանը պահպանվեց։</p>
+            <div class="lock-timer">Level 02-ը («Ես ուզում եմ հասկանալ քեզ») <br>կբացվի վաղը ⏳</div>
+        </div>
+
+        <div class="footer">
+            INTERACTIVE RELATIONSHIP REPAIR
+        </div>
+    </div>
+
+    <script>
+        // Simple client-side persistence so if the user refreshes, they see state
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("relove_level1_completed") === "true") {
+                showCompletedScreen();
+            }
+        });
+
+        function completeLevel() {
+            const responseText = document.getElementById("user-response").value;
+            
+            // Save locally
+            localStorage.setItem("relove_level1_completed", "true");
+            if (responseText.trim() !== "") {
+                localStorage.setItem("relove_level1_response", responseText);
+            }
+
+            // Visual transition
+            showCompletedScreen();
+        }
+
+        function showCompletedScreen() {
+            document.getElementById("interactive-area").style.display = "none";
+            document.getElementById("completed-area").style.display = "block";
+        }
+    </script>
+</body>
+</html>
