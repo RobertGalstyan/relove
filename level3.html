@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RE:LOVE · Level 03 · Օր 1</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #080912;
+            --card-bg: #111322;
+            --accent-purple: #c084fc;
+            --accent-blue: #38bdf8;
+            --accent-glow: rgba(192, 132, 252, 0.18);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(192, 132, 252, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 80% 85%, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 40px 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px var(--accent-glow);
+            text-align: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            letter-spacing: 5px;
+            color: var(--accent-purple);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 5px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .icon-box {
+            font-size: 48px;
+            margin-bottom: 16px;
+            animation: floatIcon 3.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 16px rgba(192, 132, 252, 0.5));
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.05); }
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        .glow-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #c084fc 0%, #38bdf8 100%);
+            border: none;
+            border-radius: 20px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 30px rgba(192, 132, 252, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .glow-btn:hover {
+            opacity: 0.95;
+            box-shadow: 0 8px 35px rgba(192, 132, 252, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .glow-btn:active {
+            transform: scale(0.96);
+        }
+
+        .status-message {
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--accent-purple);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+        }
+
+        .status-message.show {
+            opacity: 1;
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 18px;
+            animation: floatUp 2.5s forwards cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1000;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.5) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-140px) scale(1.5) rotate(30deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">RE : LOVE</div>
+        <div class="level-badge">Level 03 · Օր 1</div>
+        <div class="icon-box">🌙</div>
+        <div class="subtitle">Բարի գիշեր, անուշ երազներ․․ ✨</div>
+
+        <button class="glow-btn" id="glow-btn" onclick="sendWarmth(event)">
+            <span>💖 Ստանալ իմ ջերմությունը</span>
+        </button>
+
+        <div class="status-message" id="status-msg">✨ Ջերմության չափաբաժինը ուղարկված է 🤍</div>
+    </div>
+
+    <script>
+        const FORMSPREE_ID = "mbglypye";
+
+        async function sendWarmth(event) {
+            createParticles(event);
+
+            const statusMsg = document.getElementById("status-msg");
+            statusMsg.classList.add("show");
+
+            const btn = document.getElementById("glow-btn");
+            btn.style.transform = "scale(0.95)";
+            setTimeout(() => { btn.style.transform = "scale(1)"; }, 150);
+
+            if (FORMSPREE_ID) {
+                try {
+                    await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            event: "💖 Night warmth was received (Level 03 - Day 1)",
+                            time: new Date().toLocaleString()
+                        })
+                    });
+                } catch (error) {
+                    console.error("Error sending warmth:", error);
+                }
+            }
+        }
+
+        function createParticles(e) {
+            const symbols = ["🌙", "✨", "⭐", "🤍", "💖", "🧸"];
+            const count = 15;
+
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement("div");
+                particle.className = "particle";
+                particle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+
+                const rect = e.target.getBoundingClientRect();
+                const x = (e.clientX || (rect.left + rect.width / 2)) + (Math.random() * 100 - 50);
+                const y = (e.clientY || (rect.top + rect.height / 2)) + (Math.random() * 20 - 10);
+
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 2400);
+            }
+        }
+    </script>
+</body>
+</html>
