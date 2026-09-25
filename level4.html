@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RE:LOVE · Level 04 · Վերջնական</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: #161820;
+            --accent-pink: #e879f9;
+            --accent-rose: #f43f5e;
+            --accent-glow: rgba(232, 121, 249, 0.18);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(232, 121, 249, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+            background-image: 
+                radial-gradient(circle at 50% 15%, rgba(232, 121, 249, 0.09) 0%, transparent 55%),
+                radial-gradient(circle at 80% 85%, rgba(244, 63, 94, 0.07) 0%, transparent 55%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 36px 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 35px var(--accent-glow);
+            position: relative;
+            backdrop-filter: blur(12px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            letter-spacing: 5px;
+            color: var(--accent-pink);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .heart-container {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart {
+            width: 28px;
+            height: 28px;
+            background-color: var(--accent-pink);
+            transform: rotate(-45deg);
+            position: relative;
+            animation: pulse 2.2s infinite ease-in-out;
+            box-shadow: 0 0 18px rgba(232, 121, 249, 0.6);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 28px;
+            height: 28px;
+            background-color: var(--accent-pink);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before { top: -14px; left: 0; }
+        .heart::after { left: 14px; top: 0; }
+
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(0.95); opacity: 0.85; }
+            50% { transform: rotate(-45deg) scale(1.08); opacity: 1; box-shadow: 0 0 28px rgba(232, 121, 249, 0.85); }
+            100% { transform: rotate(-45deg) scale(0.95); opacity: 0.85; }
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .envelope-wrapper {
+            margin: 24px 0 28px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .envelope-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(232, 121, 249, 0.05));
+            border: 1px solid var(--border-hover);
+            border-radius: 20px;
+            padding: 32px 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .envelope-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-pink);
+            box-shadow: 0 15px 35px rgba(232, 121, 249, 0.2);
+        }
+
+        .envelope-icon {
+            font-size: 38px;
+            margin-bottom: 12px;
+            display: inline-block;
+            transition: transform 0.5s ease;
+            filter: drop-shadow(0 0 10px rgba(232, 121, 249, 0.4));
+        }
+
+        .envelope-hint {
+            font-size: 13px;
+            color: var(--accent-pink);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            animation: bounceHint 2s infinite;
+        }
+
+        @keyframes bounceHint {
+            0%, 100% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(-3px); opacity: 1; }
+        }
+
+        .letter-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease, padding 0.5s ease;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(232, 121, 249, 0.2);
+            border-radius: 18px;
+            padding: 0 20px;
+            margin-top: 0;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 14px;
+            color: #e2e8f0;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .letter-content.open {
+            max-height: 1400px;
+            opacity: 1;
+            padding: 24px 20px;
+            margin-top: 20px;
+            box-shadow: inset 0 0 20px rgba(232, 121, 249, 0.05);
+        }
+
+        .letter-content p {
+            margin-bottom: 14px;
+        }
+
+        .letter-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            color: var(--accent-pink);
+            font-weight: 500;
+        }
+
+        /* Booking Link Box Stylings */
+        .example-link-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(232, 121, 249, 0.08);
+            border: 1px dashed var(--accent-pink);
+            border-radius: 14px;
+            padding: 12px 16px;
+            margin: 16px 0;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .example-link-card:hover {
+            background: rgba(232, 121, 249, 0.16);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(232, 121, 249, 0.25);
+        }
+
+        .example-link-icon {
+            font-size: 22px;
+        }
+
+        .example-link-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .example-link-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-pink);
+        }
+
+        .example-link-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .glow-btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #e879f9 0%, #f43f5e 100%);
+            box-shadow: 0 4px 25px rgba(244, 63, 94, 0.35);
+        }
+
+        .btn-yes:hover {
+            opacity: 0.95;
+            box-shadow: 0 6px 30px rgba(232, 121, 249, 0.45);
+        }
+
+        .btn-maybe {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .btn-maybe:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .glow-btn:active {
+            transform: scale(0.98);
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 16px;
+            animation: floatUp 2.5s forwards cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1000;
+            opacity: 0.9;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.6) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120px) scale(1.4) rotate(25deg);
+                opacity: 0;
+            }
+        }
+
+        .status-message {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--accent-pink);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .status-message.show {
+            opacity: 1;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 11px;
+            color: #475569;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">RE : LOVE</div>
+            <div class="heart-container">
+                <div class="heart"></div>
+            </div>
+            <div class="level-badge">Level 04 · Առաջարկ</div>
+            <h1 class="title">«Մենք երկուսով»</h1>
+        </div>
+
+        <div class="envelope-wrapper" onclick="toggleLetter()">
+            <div class="envelope-card" id="card-trigger">
+                <div class="envelope-icon" id="envelope-icon">✉️</div>
+                <div class="envelope-hint" id="envelope-hint">Սեղմիր՝ նամակը բացելու համար</div>
+                
+                <div class="letter-content" id="letter" onclick="event.stopPropagation()">
+
+                    <p>Ուզում եմ քեզ մի բան առաջարկել․ <span class="highlight">արի երկուսով 1 անմոռանալի օր անցկացնենք՝ բոլորից հեռու, մենակ ես ու դու</span>։</p>
+
+                    <p>Հիշենք թե ընդհանրապես ինչի համար ենք իրար․ <span class="highlight">սիրել</span>։</p>
+
+                    <p>Սկսենք ամեն ինչ նոր էջից։</p>
+
+                    <p>Էսքան անցած օրերից հետո, էսքան չարչարանքներից ու դժվարություններից հետո, մենք պետքա ապրենք <span class="highlight">երջանիկ</span>։</p>
+
+                    <p>Արի վարձենք մի հատ շատ սիրուն, տաքուկ քոթեջ/տնակ բնության գրկում, քաղաքից դուրս, կտրվենք ամբողջ աշխարհից ու վերապրենք մեր ամենագեղեցիկ պահերը ու սկիզբ դնենք մեր սիրո նոր էջին</p>
+
+                    <!-- Example Cottage Link -->
+                    <a href="https://www.booking.com/hotel/am/panorama-apartment-with-grat-view.en-gb.html?aid=2378099&label=olr-gmcc%3ACj0KCQjwlNPVBhCMARIsAPZ5Rqh57ExV-biqXZzS7j9HdGVoG7aLIWjQ8A156njd1QO9YjZdp75NIaYaAt4aEALw_wcB&sid=473d2e5e2cf8a0e8f4e05c82130ed6f0&all_sr_blocks=1679840601_439748768_2_0_0&checkin=2026-10-01&checkout=2026-10-02&dest_id=-2324702&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=5&highlighted_blocks=1679840601_439748768_2_0_0&hpos=5&matching_block_id=1679840601_439748768_2_0_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=1679840601_439748768_2_0_0__2033200&srepoch=1790280930&srpvid=12af8e6b9efa02ec&type=total&ucfs=1&" 
+                       target="_blank" 
+                       class="example-link-card" 
+                       onclick="trackLinkClick(event, 'Panorama Apartment (Booking.com)')">
+                        <span class="example-link-icon">🏡</span>
+                        <div class="example-link-text">
+                            <span class="example-link-title">Օրինակ՝ Panorama Apartment with Great View</span>
+                            <span class="example-link-subtitle">Սեղմիր՝ այստեղ ↗</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="glow-btn btn-yes" onclick="sendResponse(event, 'Այո, համաձայն եմ 💖')">
+                <span>💖 Համաձայն եմ</span>
+            </button>
+            <button class="glow-btn btn-maybe" onclick="sendResponse(event, 'Մտածեմ... 💭')">
+                <span>💭 Մտածեմ</span>
+            </button>
+        </div>
+
+        <div class="status-message" id="status-msg"></div>
+
+        <div class="footer">
+            INTERACTIVE RELATIONSHIP REPAIR
+        </div>
+    </div>
+
+    <script>
+        const FORMSPREE_ID = "xppwlkjl";
+        let isOpened = false;
+        let hasTrackedPageOpen = false;
+
+        // Automatically track when the user opens the web page
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!hasTrackedPageOpen) {
+                hasTrackedPageOpen = true;
+                notifyEvent("👁️ Level 04 Page Opened");
+            }
+        });
+
+        function toggleLetter() {
+            const letter = document.getElementById("letter");
+            const hint = document.getElementById("envelope-hint");
+            const icon = document.getElementById("envelope-icon");
+
+            if (!isOpened) {
+                letter.classList.add("open");
+                hint.innerText = "";
+                icon.innerText = "💌";
+                isOpened = true;
+                notifyEvent("💌 Level 04 Letter was opened and read");
+            }
+        }
+
+        async function trackLinkClick(event, linkName) {
+            event.preventDefault();
+            const targetUrl = event.currentTarget.href;
+            
+            // Wait for Formspree notification to complete before redirecting
+            await notifyEvent(`🔗 Clicked Cottage Link: ${linkName}`);
+            window.open(targetUrl, "_blank");
+        }
+
+        async function sendResponse(event, answer) {
+            if (!isOpened) {
+                toggleLetter();
+            }
+
+            createParticles(event);
+
+            const statusMsg = document.getElementById("status-msg");
+            statusMsg.innerText = "✨ Պատասխանն ուղարկված է․․․ 🤍";
+            statusMsg.classList.add("show");
+
+            await notifyEvent(`💌 Response: ${answer}`);
+        }
+
+        async function notifyEvent(eventName) {
+            if (!FORMSPREE_ID) return;
+            try {
+                await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        event: eventName,
+                        level: "Level 04 - Cottage Proposal",
+                        time: new Date().toLocaleString()
+                    })
+                });
+            } catch (error) {
+                console.error("Error sending notification:", error);
+            }
+        }
+
+        function createParticles(e) {
+            const symbols = ["✨", "💖", "🏡", "🤍", "🌸", "⭐"];
+            const count = 14;
+
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement("div");
+                particle.className = "particle";
+                particle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+
+                const rect = e.target.getBoundingClientRect();
+                const x = (e.clientX || (rect.left + rect.width / 2)) + (Math.random() * 80 - 40);
+                const y = (e.clientY || (rect.top + rect.height / 2)) + (Math.random() * 20 - 10);
+
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 2400);
+            }
+        }
+    </script>
+</body>
+</html>
